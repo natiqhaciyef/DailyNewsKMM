@@ -1,4 +1,4 @@
-package com.natiqhaciyef.dailynewskmp.android
+package com.natiqhaciyef.dailynewskmp.android.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,29 +15,33 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.natiqhaciyef.dailynewskmp.Platform
+import com.natiqhaciyef.dailynewskmp.android.R
 
 
 @Composable
 fun AboutScreen(
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
+
     Column(modifier = modifier.fillMaxSize()) {
-        Toolbar(modifier)
+        TopBar(context.getString(R.string.about_device), modifier)
         ContentDescription(modifier)
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Toolbar(modifier: Modifier) {
+fun TopBar(title: String, modifier: Modifier) {
     TopAppBar(title = {
         Text(
-            text = "About Device",
+            text = title,
             modifier = modifier.padding(horizontal = 4.dp)
         )
     })
@@ -48,7 +52,8 @@ fun ContentDescription(modifier: Modifier) {
     val items = provideItems()
 
     LazyColumn(
-        modifier = modifier.fillMaxSize()
+        modifier = modifier
+            .fillMaxSize()
             .padding(horizontal = 20.dp)
     ) {
         items(items) { pair ->
