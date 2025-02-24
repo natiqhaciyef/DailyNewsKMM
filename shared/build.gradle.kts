@@ -11,7 +11,14 @@ kotlin {
             }
         }
     }
-    
+    allprojects {
+        tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
+            kotlinOptions {
+                freeCompilerArgs += "-Xexpect-actual-classes"
+            }
+        }
+    }
+
     listOf(
         iosX64(),
         iosArm64(),
