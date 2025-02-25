@@ -2,9 +2,10 @@
 //  AboutListView.swift
 //  iosApp
 //
-//  Created by Natiq Haciyev on 19.06.24.
-//  Copyright © 2024 orgName. All rights reserved.
+//  Created by Natiq Haciyev on 25.02.25.
+//  Copyright © 2025 orgName. All rights reserved.
 //
+
 import shared
 import SwiftUI
 

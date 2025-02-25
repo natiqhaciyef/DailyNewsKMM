@@ -46,8 +46,8 @@ fun NewsScreen(
         if(articleState.value.error != null)
             ErrorMessage(message = articleState.value.error!!)
 
-        if (articleState.value.articleList != null)
-            ArticlesMain(modifier = modifier, list = articleState.value.articleList!!)
+        if (articleState.value.articles != null)
+            ArticlesMain(modifier = modifier, list = articleState.value.articles!!)
     }
 
 }
