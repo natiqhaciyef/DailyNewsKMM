@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     id("co.touchlab.skie") version "0.10.1"
+    kotlin("plugin.serialization") version "2.0.0"
 }
 
 kotlin {
@@ -25,7 +26,7 @@ kotlin {
         iosArm64(),
         iosSimulatorArm64(),
 
-    ).forEach {
+        ).forEach {
         it.binaries.framework {
             baseName = "shared"
             isStatic = true
@@ -36,14 +37,21 @@ kotlin {
         commonMain.dependencies {
             //put your multiplatform dependencies here
             implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization)
+            implementation(libs.kotlinx.serialization)
+            implementation(libs.kotlinx.datetime)
+            implementation(libs.koin.core)
         }
 
         androidMain.dependencies {
             implementation(libs.androidx.lifecycle.viewmodel.ktx)
+            implementation(libs.ktor.client.okhttp)
         }
 
         iosMain.dependencies {
-
+            implementation(libs.ktor.client.darwin)
         }
 
         commonTest.dependencies {

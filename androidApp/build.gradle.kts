@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -39,8 +40,6 @@ android {
 }
 
 dependencies {
-    val coilVersion = "2.2.2"
-
     implementation(projects.shared)
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.tooling.preview)
@@ -48,5 +47,9 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     debugImplementation(libs.compose.ui.tooling)
 
-    implementation("io.coil-kt:coil-compose:$coilVersion")
+    implementation(libs.coil.compose)
+    implementation(libs.androidx.navigation.compose)
+
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
 }

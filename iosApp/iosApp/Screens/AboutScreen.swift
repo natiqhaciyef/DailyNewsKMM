@@ -17,9 +17,3 @@ struct AboutScreen: View {
         }.padding(.horizontal, 8)
     }
 }
-
-struct AboutScreen_Previews: PreviewProvider {
-    static var previews: some View {
-        AboutScreen()
-    }
-}

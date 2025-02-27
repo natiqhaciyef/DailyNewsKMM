@@ -9,7 +9,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -27,24 +31,39 @@ import com.natiqhaciyef.dailynewskmp.android.R
 @Composable
 fun AboutScreen(
     modifier: Modifier = Modifier,
+    navAction: () -> Unit
 ) {
     val context = LocalContext.current
 
     Column(modifier = modifier.fillMaxSize()) {
-        TopBar(context.getString(R.string.about_device), modifier)
+        TopBar(modifier, context.getString(R.string.about_device), navAction)
         ContentDescription(modifier)
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(title: String, modifier: Modifier) {
-    TopAppBar(title = {
-        Text(
-            text = title,
-            modifier = modifier.padding(horizontal = 4.dp)
-        )
-    })
+fun TopBar(
+    modifier: Modifier,
+    title: String,
+    action: () -> Unit
+) {
+    TopAppBar(
+        title = {
+            Text(
+                text = title,
+                modifier = modifier.padding(horizontal = 4.dp)
+            )
+        },
+        navigationIcon = {
+            IconButton(action) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Back icon"
+                )
+            }
+        }
+    )
 }
 
 @Composable

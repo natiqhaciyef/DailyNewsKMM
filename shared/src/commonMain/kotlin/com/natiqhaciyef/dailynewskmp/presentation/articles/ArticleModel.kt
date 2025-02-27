@@ -1,4 +1,4 @@
-package com.natiqhaciyef.dailynewskmp.articles
+package com.natiqhaciyef.dailynewskmp.presentation.articles
 
 data class ArticleModel(
     val title: String,

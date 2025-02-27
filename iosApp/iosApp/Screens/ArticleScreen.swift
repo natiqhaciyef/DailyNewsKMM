@@ -5,20 +5,15 @@
 //  Created by Natiq Haciyev on 24.02.25.
 //  Copyright © 2025 orgName. All rights reserved.
 //
-
 import SwiftUI
 import shared
-
-
-extension ArticlesScreen {
     
     @MainActor
-    class ArticlesViewModelWrapper: ObservableObject {
+    class ArticleViewModelWrapper: ObservableObject {
         let articlesViewModel: ArticleViewModel
         
-        
         init() {
-            articlesViewModel = ArticleViewModel()
+            articlesViewModel = ProvideViewModel().getArticleViewModel()
             articlesState = articlesViewModel.articleState.value
         }
         
@@ -27,19 +22,20 @@ extension ArticlesScreen {
         func startObserving() {
             Task {
                 for await articlesS in articlesViewModel.articleState {
-                    self.articlesState = articlesS
+                    await MainActor.run {
+                        self.articlesState = articlesS
+                    }
                 }
             }
         }
+
     }
-}
 
 struct ArticlesScreen: View {
-    
-    @ObservedObject private(set) var viewModel: ArticlesViewModelWrapper
+    @ObservedObject private(set) var viewModel: ArticleViewModelWrapper
     
     var body: some View {
-        VStack {
+        VStack{
             AppBar()
             
             if viewModel.articlesState.isLoading {
