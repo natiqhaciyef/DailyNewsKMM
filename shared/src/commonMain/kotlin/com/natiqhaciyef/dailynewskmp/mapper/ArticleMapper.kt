@@ -1,4 +1,4 @@
-package com.natiqhaciyef.dailynewskmp.network.mapper
+package com.natiqhaciyef.dailynewskmp.mapper
 
 import com.natiqhaciyef.dailynewskmp.network.reponse.ArticleResponse
 import com.natiqhaciyef.dailynewskmp.presentation.articles.ArticleModel
@@ -15,7 +15,25 @@ fun ArticleResponse.toArticleModel(): ArticleModel {
         title = this.title ?: "",
         desc = this.description ?: "Click to more info",
         date = getDaysAsName(this.publishDate),
-        imageUrl = this.imageUrl ?: "https://mathiasfrohlich.gallerycdn.vsassets.io/extensions/mathiasfrohlich/kotlin/1.7.1/1581441165235/Microsoft.VisualStudio.Services.Icons.Default"
+        imageUrl = this.imageUrl
+            ?: "https://mathiasfrohlich.gallerycdn.vsassets.io/extensions/mathiasfrohlich/kotlin/1.7.1/1581441165235/Microsoft.VisualStudio.Services.Icons.Default"
+    )
+}
+
+fun databaseMapNews(
+    title: String,
+    desc: String?,
+    date: String,
+    imageUrl: String?
+): ArticleResponse {
+    return ArticleResponse(
+        author = null,
+        content = null,
+        title = title,
+        description = desc,
+        publishDate = date,
+        imageUrl = imageUrl,
+        source = null
     )
 }
 

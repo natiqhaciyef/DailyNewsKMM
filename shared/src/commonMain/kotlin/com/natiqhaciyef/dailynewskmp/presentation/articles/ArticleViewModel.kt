@@ -1,8 +1,8 @@
 package com.natiqhaciyef.dailynewskmp.presentation.articles
 
-import com.natiqhaciyef.dailynewskmp.network.usecases.GetTopNewsUseCase
+import com.natiqhaciyef.dailynewskmp.usecases.GetTopNewsUseCase
 import com.natiqhaciyef.dailynewskmp.BaseViewModel
-import com.natiqhaciyef.dailynewskmp.network.usecases.GetPreviousNewsUseCase
+import com.natiqhaciyef.dailynewskmp.usecases.GetPreviousNewsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

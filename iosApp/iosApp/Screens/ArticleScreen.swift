@@ -8,6 +8,7 @@
 import SwiftUI
 import shared
     
+extension ArticlesScreen {
     @MainActor
     class ArticleViewModelWrapper: ObservableObject {
         let articlesViewModel: ArticleViewModel
@@ -30,6 +31,7 @@ import shared
         }
 
     }
+}
 
 struct ArticlesScreen: View {
     @ObservedObject private(set) var viewModel: ArticleViewModelWrapper

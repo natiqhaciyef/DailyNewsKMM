@@ -3,7 +3,8 @@ package com.natiqhaciyef.dailynewskmp.di
 
 val sharedModules = listOf(
     httpClient,
+    localModule,
     networkModule,
-    useCaseModule,
-    iosViewModelModule
+    repositoryModule,
+    useCaseModule
 )

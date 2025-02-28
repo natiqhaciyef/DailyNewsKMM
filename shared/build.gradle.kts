@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     id("co.touchlab.skie") version "0.10.1"
     kotlin("plugin.serialization") version "2.0.0"
+    alias(libs.plugins.sql.delight)
 }
 
 kotlin {
@@ -25,11 +26,11 @@ kotlin {
         iosX64(),
         iosArm64(),
         iosSimulatorArm64(),
-
         ).forEach {
         it.binaries.framework {
             baseName = "shared"
             isStatic = true
+            linkerOpts("-lsqlite3")
         }
     }
 
@@ -43,15 +44,18 @@ kotlin {
             implementation(libs.kotlinx.serialization)
             implementation(libs.kotlinx.datetime)
             implementation(libs.koin.core)
+            implementation(libs.sql.delight.coroutines.extensions)
         }
 
         androidMain.dependencies {
             implementation(libs.androidx.lifecycle.viewmodel.ktx)
             implementation(libs.ktor.client.okhttp)
+            implementation(libs.sql.delight.android.driver)
         }
 
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
+            implementation(libs.sql.delight.native.driver)
         }
 
         commonTest.dependencies {
@@ -69,5 +73,13 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+}
+
+sqldelight {
+    databases {
+        create("DailyNewsDatabase") {
+            packageName.set("com.natiqhaciyef.dailynewskmp.db")
+        }
     }
 }

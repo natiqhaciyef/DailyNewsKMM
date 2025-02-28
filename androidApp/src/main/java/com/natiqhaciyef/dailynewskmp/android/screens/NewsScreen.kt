@@ -34,7 +34,6 @@ import com.natiqhaciyef.dailynewskmp.android.R
 import com.natiqhaciyef.dailynewskmp.presentation.articles.ArticleModel
 import com.natiqhaciyef.dailynewskmp.presentation.articles.ArticleViewModel
 import org.koin.androidx.compose.koinViewModel
-import org.koin.viewmodel.getViewModelKey
 
 
 @Composable
