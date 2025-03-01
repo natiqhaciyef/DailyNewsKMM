@@ -3,25 +3,28 @@ import shared
 
 
 struct ContentView: View {
-////    @State private var shouldOpenAbout = false
-//    
+//    @State private var shouldOpenAbout = false
+    
     var body: some View {
+        let articleScreen = ArticlesScreen(viewModel: .init())
         NavigationStack{
-            ArticlesScreen(viewModel: .init())
-//                .toolbar {
-//                    ToolbarItem {
-//                        Button {
-////                            shouldOpenAbout.toggle()
-//                        } label: {
-//                            Label(
-//                                "About", systemImage:"info.circle"
-//                            ).labelStyle(.titleAndIcon)
+            articleScreen
+                .toolbar {
+                    ToolbarItem {
+                        Button {
+//                            shouldOpenAbout.toggle()
+                        } label: {
+                            Label(
+                                "About", systemImage:"info.circle"
+                            ).labelStyle(.titleAndIcon)
+                        }
+//                        .popover(isPresented: $shouldOpenAbout) {
+//                            AboutScreen()
 //                        }
-////                        .popover(isPresented: $shouldOpenAbout) {
-////                            AboutScreen()
-////                        }
-//                    }
-//                }
+                    }
+                }
+        }.refreshable {
+            articleScreen.viewModel.articlesViewModel.getArticles(isRefresh: true)
         }
     }
 }

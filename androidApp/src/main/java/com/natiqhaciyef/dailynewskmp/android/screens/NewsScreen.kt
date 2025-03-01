@@ -14,7 +14,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
-import androidx.compose.material.pullrefresh.PullRefreshState
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.CircularProgressIndicator
@@ -123,7 +122,7 @@ private fun ArticlesMain(
         onRefresh = {
             refreshScope.launch {
                 isRefreshing = true
-                delay(1000)  // Simulate network request
+                delay(1500)
                 refreshAction.invoke()
                 isRefreshing = false
             }
