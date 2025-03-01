@@ -10,8 +10,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.PullRefreshState
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -20,6 +25,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,6 +43,8 @@ import coil.compose.AsyncImage
 import com.natiqhaciyef.dailynewskmp.android.R
 import com.natiqhaciyef.dailynewskmp.presentation.articles.ArticleModel
 import com.natiqhaciyef.dailynewskmp.presentation.articles.ArticleViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 
@@ -54,7 +66,9 @@ fun NewsScreen(
         if (articleState.value.error != null)
             ErrorMessage(message = articleState.value.error!!)
 
-        ArticlesMain(modifier = modifier, list = articleState.value.articles)
+        ArticlesMain(modifier = modifier, list = articleState.value.articles) {
+            viewModel.getArticles(true)
+        }
     }
 
 }
@@ -70,7 +84,7 @@ private fun AppBar(
         title = { Text(title) },
         modifier = modifier,
         actions = {
-            IconButton(onClick = action){
+            IconButton(onClick = action) {
                 Icon(
                     modifier = modifier,
                     imageVector = Icons.Default.Info,
@@ -95,12 +109,45 @@ private fun LoadingScreen(modifier: Modifier) {
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-private fun ArticlesMain(modifier: Modifier, list: List<ArticleModel>) {
-    LazyColumn(modifier = modifier.fillMaxSize()) {
-        items(list) { item ->
-            ArticleItemView(article = item)
+private fun ArticlesMain(
+    modifier: Modifier,
+    list: List<ArticleModel>,
+    refreshAction: () -> Unit
+) {
+    val refreshScope = rememberCoroutineScope()
+    var isRefreshing by remember { mutableStateOf(false) }
+    val isRefreshState = rememberPullRefreshState(
+        refreshing = isRefreshing,
+        onRefresh = {
+            refreshScope.launch {
+                isRefreshing = true
+                delay(1000)  // Simulate network request
+                refreshAction.invoke()
+                isRefreshing = false
+            }
         }
+    )
+
+    Box(
+        modifier = modifier
+            .pullRefresh(
+                state = isRefreshState,
+                enabled = true
+            )
+    ) {
+        LazyColumn(modifier = modifier.fillMaxSize()) {
+            items(list) { item ->
+                ArticleItemView(article = item)
+            }
+        }
+
+        PullRefreshIndicator(
+            refreshing = isRefreshing,
+            state = isRefreshState,
+            modifier = Modifier.align(Alignment.TopCenter)
+        )
     }
 }
 

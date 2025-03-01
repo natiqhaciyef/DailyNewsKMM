@@ -6,8 +6,8 @@ import com.natiqhaciyef.dailynewskmp.repository.NewsRepository
 
 class GetTopNewsUseCase(private val repository: NewsRepository) {
 
-    suspend fun getArticles(): List<ArticleModel>{
-        val articles = repository.getArticles().map { it.toArticleModel() }
+    suspend fun getArticles(isRefresh: Boolean): List<ArticleModel>{
+        val articles = repository.getArticles(isRefresh).map { it.toArticleModel() }
         return articles
     }
 }

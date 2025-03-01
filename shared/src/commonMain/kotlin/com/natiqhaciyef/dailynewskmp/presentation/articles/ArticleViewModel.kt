@@ -21,9 +21,9 @@ class ArticleViewModel(
         getArticles()
     }
 
-    private fun getArticles() {
+    fun getArticles(isRefresh: Boolean = false) {
         scope.launch {
-            val articles = getTopNewsUseCase.getArticles()
+            val articles = getTopNewsUseCase.getArticles(isRefresh)
             _articleState.emit(ArticleUIState(articles = articles))
         }
     }
